@@ -13,10 +13,7 @@ Reads are trimmed to remove adapters, low-quality bases and homopolymer tails. A
 
 Scripts
 
-* small_rna/run.sh — small RNA-seq preprocessing and alignment
-* small_rna/summary.py — basic small RNA summaries
-* lace_seq/run.sh — LACE-seq preprocessing, alignment and peak calling
-* config.example.env — reference paths and settings
-* environment.yml — software dependencies
+* small RNA-seq preprocessing and alignment
+* LACE-seq preprocessing, alignment and peak calling
 
 Note: These scripts were reorganized from the analysis steps provided for the project. They are not a complete copy of the original analysis pipeline; additional piRNA QC and IgG-background filtering steps are not included. Reference settings should be checked against the data being analyzed.
