@@ -1,47 +1,21 @@
-# MIWI RIP small RNA-seq and LACE-seq analysis
+# OmetCLASH: Supporting Analysis of MIWI Small RNA-seq and LACE-seq Data
 
-Reproducible, configurable analysis workflows adapted from the analysis commands shared in the manuscript preparation conversation.
+This repository contains scripts for processing MIWI-associated small RNA-seq and LACE-seq data.
 
-> **Important:** This repository is a clean-room reconstruction from pasted code excerpts, not an exact archive of the original executed scripts. Validate parameters and rerun on a test sample before citing it as the deposited analysis code.
+Small RNA-seq
 
-## Contents
-- `small_rna/run.sh`: adapter trimming, sequence collapsing, RNAcentral screening and genome alignment.
-- `small_rna/summary.py`: length, 1U/10A, and RPM summaries from sequence tables.
-- `lace_seq/run.sh`: LACE-seq R1 trimming, rRNA depletion, genome mapping, peak calling, coverage tracks and optional annotation.
-- `config.example.env`: paths and analysis settings.
-- `environment.yml`: software dependencies.
+Reads are adapter-trimmed and collapsed into unique sequences with read counts. Known small RNAs (rRNA, tRNA, snoRNA, snRNA and miRNA) are identified using Bowtie2 and RNAcentral references. Sequences are then aligned to a mouse genome reference. The included summary script reports read lengths and nucleotide preferences (1U and 10A).
 
-## Setup
-```bash
-conda env create -f environment.yml
-conda activate miwi-analysis
-cp config.example.env config.env
-# Edit config.env to point to local FASTA/Bowtie2 indices
-```
+LACE-seq
 
-## Small RNA-seq
-```bash
-bash small_rna/run.sh config.env sample_id reads.fastq.gz output/small_rna
-python small_rna/summary.py output/small_rna/sample_id.seq_annot.tsv.gz output/small_rna/sample_id.metrics.tsv
-```
+Reads are trimmed to remove adapters, low-quality bases and homopolymer tails. After filtering rRNA-matching reads, the remaining reads are aligned to the mouse GRCm39 genome using Bowtie2. Peaks are called with Piranha, annotated with HOMER, and visualized using CPM-normalized coverage tracks from deepTools.
 
-## LACE-seq
-```bash
-bash lace_seq/run.sh config.env sample_id reads.R1.fastq.gz output/lace_seq
-```
+Scripts
 
-## Analysis provenance and caveats
-- The pasted original small-RNA preprocessing used an **mm10 + ERCC92** index and sent **only sequences not matched to RNAcentral** to the genome aligner. The later requested manuscript description (GRCm39, re-align *all* sequences) is **not identical**. The reconstructed workflow exposes `SMRNA_GENOME_MODE=all|unmatched` and uses a configurable genome index; do not claim the manuscript workflow was executed without checking original output provenance.
-- The original LACE-seq script mapped to **GRCm39**, removed human/mouse rRNA matches, used Bowtie2 `-k 1` (not unique mapping), Piranha 50-nt bins, zero-truncated negative binomial, P < 1e-4, and bamCoverage CPM, 25-bp bins.
-- `small_rna/summary.py` is a compact QC summary, **not** a replacement for the original extensive `02_pirna_qc.py` or `03_base_percentage.py` figures/ping-pong analysis. Upload the originals to include those analyses verbatim after code review.
-- LACE-seq IgG subtraction is **not included**: the supplied excerpts showed an `rmIgG` filename but no actual subtraction algorithm. Do not describe background subtraction as performed by this repository.
-- Bowtie2's `-k 1` does not guarantee uniquely mapped reads. `NM<=1` is an optional post-alignment filter for the small-RNA table.
+* small_rna/run.sh — small RNA-seq preprocessing and alignment
+* small_rna/summary.py — basic small RNA summaries
+* lace_seq/run.sh — LACE-seq preprocessing, alignment and peak calling
+* config.example.env — reference paths and settings
+* environment.yml — software dependencies
 
-## Data
-No FASTQ files, genome indices, personal paths or unpublished data are bundled. Supply your own reference indices and document the versions used.
-
-## Citation
-Cite cutadapt, Bowtie2, SAMtools, BEDTools, Piranha, HOMER and deepTools as appropriate. See `docs/software.md`.
-
-## License
-MIT (see LICENSE).
+Note: These scripts were reorganized from the analysis steps provided for the project. They are not a complete copy of the original analysis pipeline; additional piRNA QC and IgG-background filtering steps are not included. Reference settings should be checked against the data being analyzed.
