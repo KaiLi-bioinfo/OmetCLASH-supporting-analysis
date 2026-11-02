@@ -4,7 +4,7 @@ This repository contains scripts for processing MIWI-associated small RNA-seq an
 
 Small RNA-seq
 
-Reads are adapter-trimmed and collapsed into unique sequences with read counts. Known small RNAs (rRNA, tRNA, snoRNA, snRNA and miRNA) are identified using Bowtie2 and RNAcentral references. Sequences are then aligned to a mouse genome reference. The included summary script reports read lengths and nucleotide preferences (1U and 10A).
+Reads are adapter-trimmed and collapsed into unique sequences with read counts. Known small RNAs (rRNA, tRNA, snoRNA, snRNA and miRNA) are identified using Bowtie2 and RNAcentral references. Sequences are then aligned to a mouse genome reference. The included summary script reports read lengths and nucleotide preferences (1U).
 
 LACE-seq
 
