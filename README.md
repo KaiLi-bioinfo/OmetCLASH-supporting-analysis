@@ -1,5 +1,6 @@
-MIWI small RNA-seq and LACE-seq analysis
+OmetCLASH: Supporting Analysis of MIWI Small RNA-seq and LACE-seq Data
 
+This repository contains scripts used to process and analyze MIWI small RNA-seq and LACE-seq data as part of the OmetCLASH study.
 This repository contains scripts for processing MIWI-associated small RNA-seq and LACE-seq data.
 
 Small RNA-seq
