@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+#LACE-seq data processing
+
+#Only Read 1 (R1) was used for analysis because the LACE-seq
+
+#inserts were short and Read 2 (R2) consisted predominantly
+
+#f poly(G) sequences (GGGGGGGGG), providing no useful
+
+#equence information for genomic alignment.
+#
 set -euo pipefail
 [[ $# -eq 4 ]] || { echo "Usage: $0 config.env SAMPLE reads.R1.fastq.gz OUTDIR" >&2; exit 2; }
 source "$1"; sample=$2; input=$3; out=$4; mkdir -p "$out"; : "${LACE_RRNA_INDEX:?}" "${LACE_GENOME_INDEX:?}"
