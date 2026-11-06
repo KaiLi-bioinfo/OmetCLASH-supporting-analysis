@@ -1,4 +1,4 @@
-# OmetCLASH: Supporting Analysis of Small RNA-seq and LACE-seq Data
+# eCLASH: Supporting Analysis of Small RNA-seq and LACE-seq Data
 
 This repository contains scripts for processing MIWI-associated small RNA-seq and LACE-seq data.
 
